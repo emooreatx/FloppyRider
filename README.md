@@ -4,7 +4,7 @@ Disk interface adapter to connect an IBM 31SD or 51TD 8-inch disk unit to a stan
 ![Diskette](./images/v2_pcb.JPG)
 
 
-__Third revision (v2.1) (2022/12/03): Added improved write protection mechanism.__
+__Third revision (v2.1) (2022/12/03): Added an improved write protection mechanism and support for installing an external write protection switch.__
 
 __Fabrication files released: [V2 fabrication files](./pcb)__
 
