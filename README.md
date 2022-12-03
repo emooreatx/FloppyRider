@@ -1,20 +1,24 @@
 # FloppyRider
 Disk interface adapter to connect an IBM 31SD or 51TD 8-inch disk unit to a standard PC floppy controller
 
-![Diskette](./images/floppyrider.JPG)
+![Diskette](./images/v2_pcb.JPG)
+
+
+__Third revision (v2.1) (2022/12/03): Added improved write protection mechanism.__
+
+__Fabrication files released: [V2 fabrication files](./pcb)__
+
+Second revision (20220624): I have added a transistor to drive the write/erase-gate signals on the IBM drive. I have noticed that write/erase-gate have a very low input impedance (90 ohms each, could that be a safety measure to make harder to accidentally drive the signal high?) that is way over-spec for the 74LS logic to drive properly. The prototype worked by pure luck but trying with other 74LS components the signal level was too low to enable the gates so the device was only capable of reading. The solution is to include a transistor to drive that signals up to aceptable levels.
 
 
 ![Diskette](./images/IBM_Diskette_1_with_envelope.gif)
 
-__This project is currently in Beta stage.__
-
-__Second revision (20220624): I have added a transistor to drive the write/erase-gate signals on the IBM drive. I have noticed that write/erase-gate have a very low input impedance (90 ohms each, could that be a safety measure to make harder to accidentally drive the signal high?) that is way over-spec for the 74LS logic to drive properly. The prototype worked by pure luck but trying with other 74LS components the signal level was too low to enable the gates so the device was only capable of reading. The solution is to include a transistor to drive that signals up to aceptable levels.__
 
 ## Introduction
 
 This is an ongoing project to create an adapter to be able to use IBM 8-inch Diskette drives with a standard PC floppy controller.
 
-I currently have a working prototype capable of reading, writing and formatting Diskette 1,2 (SD) and 2D (DD) types on a 51TD disk drive. Further testing will be needed to consider it stable and fully operational.
+The current production version is capable of reading, writing and formatting Diskette 1,2 (SD) and 2D (DD) types on a 51TD disk drive.
 
 ## Videos
 
@@ -53,13 +57,15 @@ You can get the Arduino source code for the ProMicro in the __FloppyRider__ dire
 
 ## KiCad Project
 
-You can get the current project files in the __KiCad__ directory. The PCB design has not been validated at this point.
+You can get the current project files in the __KiCad__ directory. The PCB design files are now available if you want to make your own board :  [V2 fabrication files](./pcb)
 
 ## Warning about some floppy controllers
 
 It seems that some floppy controllers may ground the signals to the floppy drive when the computer is switched off. If you have a diskettte inserted and engaged when this happens, that can lead to the track where the head is currently positioned to be erased.
 
 If you are working with important media be careful about this, and give power to the 51TD drive only __after__ the computer is switched on, and remove the diskette or the power to the disk drive __before__ the computer is switched off.
+
+__The version 2 board improves this situation__ because when the write protection switch is engaged, the Write/Erase Gate signals for the 8" drive are physically disconnected from the incoming write signals, so you won't accidentally erase any data __if write protection is engaged__, even if the host floppy controller grounds all the interface signals. This makes the adapter safer for using in disk imaging tasks.
 
 ## Operation
 
@@ -107,15 +113,22 @@ _As the connectors carry a powerful +24V signal, connector orientation is critic
 
 On the other end of the adapter you have a 34-pin header for the PC standard floppy cable. The adapter is hard-wired for drive B as most PC floppy drives are.
 
+
+## External write protection
+
+A 6-pin 2x3 pin header is provided to be able to connect an external SPDT write protection switch. In case of __using the external write protection switch, the on-board switch has to be placed in the ON position and jumper JP1 has to be removed__. Then you can control the ON-OFF write protection status from the external switch.
+
+On the contrary, __if you are using the on-board write protection switch, the JP1 jumper has to be installed__. The jumper is not safety-critical though, as the effect of not installing it will be that the host controller will consider the write protection always disabled, but the drive will be write-protected anyway if the write protection switch is in the ON position.
+
 ## Schematics
 
-As currently working on the prototype unit. Subject to further modification
+As currently working on the production units. Subject to further modification
 
 ![Diskette](./images/schematic.png)
 
 
 ## PCB
 
-Sample of how the actual PCB could be. Not validated in production examples.
+Sample image of the PCB from Kicad.
 
 ![Diskette](./images/pcb2.png)
