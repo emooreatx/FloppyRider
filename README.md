@@ -25,6 +25,8 @@ In theory it may work also with IBM 31SD drives but I don't have one so it is un
 
 The current production version is capable of reading, writing and formatting Diskette 1,Diskette 2 (SD) and Diskette 2D (DD) types on a 51TD disk drive.
 
+The IBM 51TD was used in the IBM Displaywriter, System/36, System/38, and other machines.
+
 If you like it or want to make your unit drop me a message to inmbolmie [AT] gmail.com
 
 ![Diskette](./images/IBM_Diskette_1_with_envelope.gif)
